@@ -1,0 +1,83 @@
+C:\Users\Mazlum\source\repos\DSS_LastAssignment\DSS_LastAssignment\bin\Debug\DSS_LastAssignment.exe.config
+C:\Users\Mazlum\source\repos\DSS_LastAssignment\DSS_LastAssignment\bin\Debug\DSS_LastAssignment.exe
+C:\Users\Mazlum\source\repos\DSS_LastAssignment\DSS_LastAssignment\bin\Debug\DSS_LastAssignment.pdb
+C:\Users\Mazlum\source\repos\DSS_LastAssignment\DSS_LastAssignment\obj\Debug\DSS_LastAssignment.csprojAssemblyReference.cache
+C:\Users\Mazlum\source\repos\DSS_LastAssignment\DSS_LastAssignment\obj\Debug\DSS_LastAssignment.Form1.resources
+C:\Users\Mazlum\source\repos\DSS_LastAssignment\DSS_LastAssignment\obj\Debug\DSS_LastAssignment.Properties.Resources.resources
+C:\Users\Mazlum\source\repos\DSS_LastAssignment\DSS_LastAssignment\obj\Debug\DSS_LastAssignment.csproj.GenerateResource.cache
+C:\Users\Mazlum\source\repos\DSS_LastAssignment\DSS_LastAssignment\obj\Debug\DSS_LastAssignment.csproj.CoreCompileInputs.cache
+C:\Users\Mazlum\source\repos\DSS_LastAssignment\DSS_LastAssignment\obj\Debug\DSS_LastAssignment.exe
+C:\Users\Mazlum\source\repos\DSS_LastAssignment\DSS_LastAssignment\obj\Debug\DSS_LastAssignment.pdb
+C:\Users\Mazlum\source\repos\DSS_LastAssignment\DSS_LastAssignment\bin\Debug\IKVM.OpenJDK.Beans.dll
+C:\Users\Mazlum\source\repos\DSS_LastAssignment\DSS_LastAssignment\bin\Debug\IKVM.OpenJDK.Charsets.dll
+C:\Users\Mazlum\source\repos\DSS_LastAssignment\DSS_LastAssignment\bin\Debug\IKVM.OpenJDK.Corba.dll
+C:\Users\Mazlum\source\repos\DSS_LastAssignment\DSS_LastAssignment\bin\Debug\IKVM.OpenJDK.Core.dll
+C:\Users\Mazlum\source\repos\DSS_LastAssignment\DSS_LastAssignment\bin\Debug\IKVM.OpenJDK.Jdbc.dll
+C:\Users\Mazlum\source\repos\DSS_LastAssignment\DSS_LastAssignment\bin\Debug\IKVM.OpenJDK.Management.dll
+C:\Users\Mazlum\source\repos\DSS_LastAssignment\DSS_LastAssignment\bin\Debug\IKVM.OpenJDK.Media.dll
+C:\Users\Mazlum\source\repos\DSS_LastAssignment\DSS_LastAssignment\bin\Debug\IKVM.OpenJDK.Misc.dll
+C:\Users\Mazlum\source\repos\DSS_LastAssignment\DSS_LastAssignment\bin\Debug\IKVM.OpenJDK.Naming.dll
+C:\Users\Mazlum\source\repos\DSS_LastAssignment\DSS_LastAssignment\bin\Debug\IKVM.OpenJDK.Remoting.dll
+C:\Users\Mazlum\source\repos\DSS_LastAssignment\DSS_LastAssignment\bin\Debug\IKVM.OpenJDK.Security.dll
+C:\Users\Mazlum\source\repos\DSS_LastAssignment\DSS_LastAssignment\bin\Debug\IKVM.OpenJDK.SwingAWT.dll
+C:\Users\Mazlum\source\repos\DSS_LastAssignment\DSS_LastAssignment\bin\Debug\IKVM.OpenJDK.Text.dll
+C:\Users\Mazlum\source\repos\DSS_LastAssignment\DSS_LastAssignment\bin\Debug\IKVM.OpenJDK.Tools.dll
+C:\Users\Mazlum\source\repos\DSS_LastAssignment\DSS_LastAssignment\bin\Debug\IKVM.OpenJDK.Util.dll
+C:\Users\Mazlum\source\repos\DSS_LastAssignment\DSS_LastAssignment\bin\Debug\IKVM.OpenJDK.XML.API.dll
+C:\Users\Mazlum\source\repos\DSS_LastAssignment\DSS_LastAssignment\bin\Debug\IKVM.OpenJDK.XML.Bind.dll
+C:\Users\Mazlum\source\repos\DSS_LastAssignment\DSS_LastAssignment\bin\Debug\IKVM.OpenJDK.XML.Crypto.dll
+C:\Users\Mazlum\source\repos\DSS_LastAssignment\DSS_LastAssignment\bin\Debug\IKVM.OpenJDK.XML.Parse.dll
+C:\Users\Mazlum\source\repos\DSS_LastAssignment\DSS_LastAssignment\bin\Debug\IKVM.OpenJDK.XML.Transform.dll
+C:\Users\Mazlum\source\repos\DSS_LastAssignment\DSS_LastAssignment\bin\Debug\IKVM.OpenJDK.XML.WebServices.dll
+C:\Users\Mazlum\source\repos\DSS_LastAssignment\DSS_LastAssignment\bin\Debug\IKVM.OpenJDK.XML.XPath.dll
+C:\Users\Mazlum\source\repos\DSS_LastAssignment\DSS_LastAssignment\bin\Debug\IKVM.Runtime.dll
+C:\Users\Mazlum\source\repos\DSS_LastAssignment\DSS_LastAssignment\bin\Debug\weka.dll
+C:\Users\Mazlum\source\repos\DSS_LastAssignment\DSS_LastAssignment\obj\Debug\DSS_LastAssignment.csproj.CopyComplete
+C:\Users\GülEda Aydemir\Desktop\DSS ASS 2\DSS_LastAssignment\DSS_LastAssignment\obj\Debug\DSS_LastAssignment.csprojAssemblyReference.cache
+C:\Users\GülEda Aydemir\Desktop\DSS ASS 2\DSS_LastAssignment\DSS_LastAssignment\obj\Debug\DSS_LastAssignment.Form1.resources
+C:\Users\GülEda Aydemir\Desktop\DSS ASS 2\DSS_LastAssignment\DSS_LastAssignment\obj\Debug\DSS_LastAssignment.Properties.Resources.resources
+C:\Users\GülEda Aydemir\Desktop\DSS ASS 2\DSS_LastAssignment\DSS_LastAssignment\obj\Debug\DSS_LastAssignment.csproj.GenerateResource.cache
+C:\Users\GülEda Aydemir\Desktop\DSS ASS 2\DSS_LastAssignment\DSS_LastAssignment\obj\Debug\DSS_LastAssignment.csproj.CoreCompileInputs.cache
+C:\Users\GülEda Aydemir\Desktop\DSS ASS 2\DSS_LastAssignment\DSS_LastAssignment\obj\Debug\DSS_LastAssignment.exe
+C:\Users\GülEda Aydemir\Desktop\DSS ASS 2\DSS_LastAssignment\DSS_LastAssignment\obj\Debug\DSS_LastAssignment.pdb
+C:\Users\GülEda Aydemir\Desktop\DSS ASS 2\DSS_LastAssignment\DSS_LastAssignment\bin\Debug\DSS_LastAssignment.exe.config
+C:\Users\GülEda Aydemir\Desktop\DSS ASS 2\DSS_LastAssignment\DSS_LastAssignment\bin\Debug\DSS_LastAssignment.exe
+C:\Users\GülEda Aydemir\Desktop\DSS ASS 2\DSS_LastAssignment\DSS_LastAssignment\bin\Debug\DSS_LastAssignment.pdb
+C:\Users\GülEda Aydemir\Desktop\DSS ASS 2\DSS_LastAssignment\DSS_LastAssignment\bin\Debug\weka.dll
+C:\Users\GülEda Aydemir\Desktop\DSS ASS 2\DSS_LastAssignment\DSS_LastAssignment\obj\Debug\DSS_LastAssignment.csproj.CopyComplete
+C:\Users\Mazlum\Desktop\2018-2019 Sonbahar Dönemi\DSS ASS 2\DSS_LastAssignment\DSS_LastAssignment\bin\Debug\DSS_LastAssignment.exe.config
+C:\Users\Mazlum\Desktop\2018-2019 Sonbahar Dönemi\DSS ASS 2\DSS_LastAssignment\DSS_LastAssignment\bin\Debug\DSS_LastAssignment.exe
+C:\Users\Mazlum\Desktop\2018-2019 Sonbahar Dönemi\DSS ASS 2\DSS_LastAssignment\DSS_LastAssignment\bin\Debug\DSS_LastAssignment.pdb
+C:\Users\Mazlum\Desktop\2018-2019 Sonbahar Dönemi\DSS ASS 2\DSS_LastAssignment\DSS_LastAssignment\bin\Debug\weka.dll
+C:\Users\Mazlum\Desktop\2018-2019 Sonbahar Dönemi\DSS ASS 2\DSS_LastAssignment\DSS_LastAssignment\obj\Debug\DSS_LastAssignment.csprojAssemblyReference.cache
+C:\Users\Mazlum\Desktop\2018-2019 Sonbahar Dönemi\DSS ASS 2\DSS_LastAssignment\DSS_LastAssignment\obj\Debug\DSS_LastAssignment.Form1.resources
+C:\Users\Mazlum\Desktop\2018-2019 Sonbahar Dönemi\DSS ASS 2\DSS_LastAssignment\DSS_LastAssignment\obj\Debug\DSS_LastAssignment.Properties.Resources.resources
+C:\Users\Mazlum\Desktop\2018-2019 Sonbahar Dönemi\DSS ASS 2\DSS_LastAssignment\DSS_LastAssignment\obj\Debug\DSS_LastAssignment.csproj.GenerateResource.cache
+C:\Users\Mazlum\Desktop\2018-2019 Sonbahar Dönemi\DSS ASS 2\DSS_LastAssignment\DSS_LastAssignment\obj\Debug\DSS_LastAssignment.csproj.CoreCompileInputs.cache
+C:\Users\Mazlum\Desktop\2018-2019 Sonbahar Dönemi\DSS ASS 2\DSS_LastAssignment\DSS_LastAssignment\obj\Debug\DSS_LastAssignment.csproj.CopyComplete
+C:\Users\Mazlum\Desktop\2018-2019 Sonbahar Dönemi\DSS ASS 2\DSS_LastAssignment\DSS_LastAssignment\obj\Debug\DSS_LastAssignment.exe
+C:\Users\Mazlum\Desktop\2018-2019 Sonbahar Dönemi\DSS ASS 2\DSS_LastAssignment\DSS_LastAssignment\obj\Debug\DSS_LastAssignment.pdb
+C:\Users\GülEda Aydemir\Desktop\Dss_december30\DSS_LastAssignment\DSS_LastAssignment\bin\Debug\DSS_LastAssignment.exe.config
+C:\Users\GülEda Aydemir\Desktop\Dss_december30\DSS_LastAssignment\DSS_LastAssignment\bin\Debug\DSS_LastAssignment.exe
+C:\Users\GülEda Aydemir\Desktop\Dss_december30\DSS_LastAssignment\DSS_LastAssignment\bin\Debug\DSS_LastAssignment.pdb
+C:\Users\GülEda Aydemir\Desktop\Dss_december30\DSS_LastAssignment\DSS_LastAssignment\bin\Debug\weka.dll
+C:\Users\GülEda Aydemir\Desktop\Dss_december30\DSS_LastAssignment\DSS_LastAssignment\obj\Debug\DSS_LastAssignment.csprojAssemblyReference.cache
+C:\Users\GülEda Aydemir\Desktop\Dss_december30\DSS_LastAssignment\DSS_LastAssignment\obj\Debug\DSS_LastAssignment.Form1.resources
+C:\Users\GülEda Aydemir\Desktop\Dss_december30\DSS_LastAssignment\DSS_LastAssignment\obj\Debug\DSS_LastAssignment.Properties.Resources.resources
+C:\Users\GülEda Aydemir\Desktop\Dss_december30\DSS_LastAssignment\DSS_LastAssignment\obj\Debug\DSS_LastAssignment.csproj.GenerateResource.cache
+C:\Users\GülEda Aydemir\Desktop\Dss_december30\DSS_LastAssignment\DSS_LastAssignment\obj\Debug\DSS_LastAssignment.csproj.CoreCompileInputs.cache
+C:\Users\GülEda Aydemir\Desktop\Dss_december30\DSS_LastAssignment\DSS_LastAssignment\obj\Debug\DSS_LastAssignment.csproj.CopyComplete
+C:\Users\GülEda Aydemir\Desktop\Dss_december30\DSS_LastAssignment\DSS_LastAssignment\obj\Debug\DSS_LastAssignment.exe
+C:\Users\GülEda Aydemir\Desktop\Dss_december30\DSS_LastAssignment\DSS_LastAssignment\obj\Debug\DSS_LastAssignment.pdb
+C:\Users\kingn\Downloads\CME4432-ApplicationsofDecisionSupportSystems-Weka\DSS_LastAssignment\DSS_LastAssignment\bin\Debug\DSS_LastAssignment.exe.config
+C:\Users\kingn\Downloads\CME4432-ApplicationsofDecisionSupportSystems-Weka\DSS_LastAssignment\DSS_LastAssignment\bin\Debug\DSS_LastAssignment.exe
+C:\Users\kingn\Downloads\CME4432-ApplicationsofDecisionSupportSystems-Weka\DSS_LastAssignment\DSS_LastAssignment\bin\Debug\DSS_LastAssignment.pdb
+C:\Users\kingn\Downloads\CME4432-ApplicationsofDecisionSupportSystems-Weka\DSS_LastAssignment\DSS_LastAssignment\bin\Debug\weka.dll
+C:\Users\kingn\Downloads\CME4432-ApplicationsofDecisionSupportSystems-Weka\DSS_LastAssignment\DSS_LastAssignment\obj\Debug\DSS_LastAssignment.csproj.AssemblyReference.cache
+C:\Users\kingn\Downloads\CME4432-ApplicationsofDecisionSupportSystems-Weka\DSS_LastAssignment\DSS_LastAssignment\obj\Debug\DSS_LastAssignment.Form1.resources
+C:\Users\kingn\Downloads\CME4432-ApplicationsofDecisionSupportSystems-Weka\DSS_LastAssignment\DSS_LastAssignment\obj\Debug\DSS_LastAssignment.Properties.Resources.resources
+C:\Users\kingn\Downloads\CME4432-ApplicationsofDecisionSupportSystems-Weka\DSS_LastAssignment\DSS_LastAssignment\obj\Debug\DSS_LastAssignment.csproj.GenerateResource.cache
+C:\Users\kingn\Downloads\CME4432-ApplicationsofDecisionSupportSystems-Weka\DSS_LastAssignment\DSS_LastAssignment\obj\Debug\DSS_LastAssignment.csproj.CoreCompileInputs.cache
+C:\Users\kingn\Downloads\CME4432-ApplicationsofDecisionSupportSystems-Weka\DSS_LastAssignment\DSS_LastAssignment\obj\Debug\DSS_LastAssignment.csproj.CopyComplete
+C:\Users\kingn\Downloads\CME4432-ApplicationsofDecisionSupportSystems-Weka\DSS_LastAssignment\DSS_LastAssignment\obj\Debug\DSS_LastAssignment.exe
+C:\Users\kingn\Downloads\CME4432-ApplicationsofDecisionSupportSystems-Weka\DSS_LastAssignment\DSS_LastAssignment\obj\Debug\DSS_LastAssignment.pdb
