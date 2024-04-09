@@ -20,7 +20,8 @@ namespace DSS_LastAssignment
 {
     public partial class MainForm : Form
     {
-        private const int PercentSplit = 80;
+        private const int SplitPercent = 80;
+        private const int CrossValidation = 10;
         private static Classifier _clNaive;
         private static Classifier _clKnn;
         private static Classifier _clTree;
@@ -60,7 +61,11 @@ namespace DSS_LastAssignment
 
         private void result_Click(object sender, EventArgs e)
         {
-            if (_classifierName == null) throw new ArgumentNullException(nameof(_classifierName));
+            // Ensure that _classifierName is not null
+            if (_classifierName == null)
+                throw new ArgumentNullException(nameof(_classifierName));
+
+            // List of algorithms to be evaluated
             var algorithms = new List<string>
             {
                 "Naive Bayes",
@@ -70,73 +75,51 @@ namespace DSS_LastAssignment
                 "Support Vector Machine"
             };
 
+            // List to store success rates of each algorithm
             var successPercent = new List<double>();
 
-            //Naive Bayes
+            // Evaluate Naive Bayes algorithm
             var insts = new Instances(new FileReader(_fileDirectory));
-            //Render the view
+            // Render the view of the instances
             RenderView(insts);
-
             _clNaive = new NaiveBayes();
-
-            HandleNaiveBayes(insts, successPercent, _randomize);
+            HandleNaiveBayes(insts, _randomize);
             var naiveBayesSuccessRate = PerformCrossValidation(_clNaive, insts);
             successPercent.Add(naiveBayesSuccessRate);
 
-
-            
-
-            //kNN 
-
+            // Evaluate K Nearest Neighbor algorithm
             var insts2 = new Instances(new FileReader(_fileDirectory));
-
             insts2.setClassIndex(insts2.numAttributes() - 1);
-
             _clKnn = new IBk();
-
-            HandleKnn(insts2, successPercent, _randomize, _nominalToBinary, _normalize);
+            HandleKnn(insts2, _randomize, _nominalToBinary, _normalize);
             var knnSuccessRate = PerformCrossValidation(_clKnn, insts2);
             successPercent.Add(knnSuccessRate);
 
-            //Decision tree
+            // Evaluate Decision Tree algorithm
             var insts3 = new Instances(new FileReader(_fileDirectory));
-
             insts3.setClassIndex(insts3.numAttributes() - 1);
-
             _clTree = new J48();
-
-
-            HandleTree(insts3, successPercent, _randomize, _normalize);
+            HandleTree(insts3, _randomize, _normalize);
             var treeSuccessRate = PerformCrossValidation(_clTree, insts3);
             successPercent.Add(treeSuccessRate);
 
-
-
-            //Neural Network
+            // Evaluate Neural Network algorithm
             var insts4 = new Instances(new FileReader(_fileDirectory));
-
             insts4.setClassIndex(insts4.numAttributes() - 1);
-
             _clNn = new MultilayerPerceptron();
-
-            HandleNn(insts4, successPercent, _randomize, _nominalToBinary, _normalize);
+            HandleNn(insts4, _randomize, _nominalToBinary, _normalize);
             var nnSuccessRate = PerformCrossValidation(_clNn, insts4);
             successPercent.Add(nnSuccessRate);
 
-
-            //SVM
+            // Evaluate Support Vector Machine algorithm
             var insts5 = new Instances(new FileReader(_fileDirectory));
-
             insts5.setClassIndex(insts5.numAttributes() - 1);
-
             _clSvm = new SMO();
-
-            HandleSvm(insts5, successPercent, _randomize, _nominalToBinary, _normalize);
+            HandleSvm(insts5, _randomize, _nominalToBinary, _normalize);
             var svmSuccessRate = PerformCrossValidation(_clSvm, insts5);
             successPercent.Add(svmSuccessRate);
 
-
-
+            // Determine the best algorithm based on success rates
             for (var i = 0; i < successPercent.Count; i++)
                 if (successPercent[i] > _rate)
                 {
@@ -144,45 +127,46 @@ namespace DSS_LastAssignment
                     _classifierName = algorithms[i];
                 }
 
+            // Update label with the best algorithm and its success rate
             label1.Text = $@"{_classifierName} is the best algorithm with {_rate:F2}% success rate.";
         }
+
 
         private void RenderView(Instances insts)
         {
             // Create a new DataGridView with 2 columns
             dataGridView1.ColumnCount = 2;
             dataGridView1.RowCount = insts.numAttributes();
-            var matrixOfInstances = new string[insts.numInstances(), insts.numAttributes()];
-
 
             // Fill the DataGridView with the attribute names and their values
-            for (var y = 0; y < insts.numAttributes() - 1; y++)
+            for (var attributeIndex = 0; attributeIndex < insts.numAttributes() - 1; attributeIndex++)
             {
                 // Fill the first column with the attribute names
-                dataGridView1.Rows[y].Cells[0].Value = insts.attribute(y).name();
+                var attributeName = insts.attribute(attributeIndex).name();
+                dataGridView1.Rows[attributeIndex].Cells[0].Value = attributeName;
 
-                if (insts.attribute(y).isNominal())
+                // If the attribute is nominal, create a combo box cell with its values
+                if (insts.attribute(attributeIndex).isNominal())
                 {
-                    var phrase = insts.attribute(y).toString();
-                    var first = phrase.Split('{');
+                    // Extract attribute values from the ARFF format
+                    var attributeValues = insts.attribute(attributeIndex).toString().Split('{')[1].Split('}')[0]
+                        .Split(',');
 
-                    var second = first[1].Split('}');
-
-                    var attributeValues = second[0].Split(',');
-
+                    // Create a combo box cell and add attribute values as options
                     var comboColumn = new DataGridViewComboBoxCell();
+                    foreach (var value in attributeValues) comboColumn.Items.Add(value);
 
-                    foreach (var a in attributeValues) comboColumn.Items.Add(a);
-
-                    dataGridView1.Rows[y].Cells[1] = comboColumn;
+                    // Assign the combo box cell to the second column of the DataGridView
+                    dataGridView1.Rows[attributeIndex].Cells[1] = comboColumn;
                 }
             }
 
-            // Fill the last row with the class attribute
+            // Set the class attribute index for classification
             insts.setClassIndex(insts.numAttributes() - 1);
         }
 
-        private static void HandleSvm(Instances insts5, List<double> successPercent, Filter random,
+
+        private static void HandleSvm(Instances insts5, Filter random,
             Filter nominalToBinary, Filter normalize)
         {
             //Nominal to Binary
@@ -194,17 +178,16 @@ namespace DSS_LastAssignment
             //randomize the order of the instances in the dataset.
             insts5 = Randomize(random, insts5);
 
-            var trainSize5 = insts5.numInstances() * PercentSplit / 100;
+            var trainSize5 = insts5.numInstances() * SplitPercent / 100;
             var testSize5 = insts5.numInstances() - trainSize5;
             var train5 = new Instances(insts5, 0, trainSize5);
 
             _clSvm.buildClassifier(train5);
 
             _clSvm.toString();
-           
         }
 
-        private static void HandleNn(Instances insts4, List<double> successPercent, Filter random,
+        private static void HandleNn(Instances insts4, Filter random,
             Filter nominalToBinary, Filter normalize)
         {
             //Nominal to Binary
@@ -216,33 +199,30 @@ namespace DSS_LastAssignment
             //randomize the order of the instances in the dataset.   
             insts4 = Randomize(random, insts4);
 
-            var trainSize4 = insts4.numInstances() * PercentSplit / 100;
+            var trainSize4 = insts4.numInstances() * SplitPercent / 100;
             var testSize4 = insts4.numInstances() - trainSize4;
             var train4 = new Instances(insts4, 0, trainSize4);
 
             _clNn.buildClassifier(train4);
-            
         }
 
-        private static void HandleTree(Instances insts3, List<double> successPercent, Filter random, Filter normalize)
+        private static void HandleTree(Instances insts3, Filter random, Filter normalize)
         {
             //Normalization
             insts3 = Normalize(normalize, insts3);
             //randomize the order of the instances in the dataset.
             insts3 = Randomize(random, insts3);
 
-            var trainSize3 = insts3.numInstances() * PercentSplit / 100;
+            var trainSize3 = insts3.numInstances() * SplitPercent / 100;
             var testSize3 = insts3.numInstances() - trainSize3;
             var train3 = new Instances(insts3, 0, trainSize3);
 
             _clTree.buildClassifier(train3);
 
             _clTree.toString();
-
-            
         }
 
-        private static void HandleKnn(Instances insts2, List<double> successPercent, Filter random,
+        private static void HandleKnn(Instances insts2, Filter random,
             Filter nominalToBinary, Filter normalize)
         {
             //Nominal to Binary
@@ -254,25 +234,24 @@ namespace DSS_LastAssignment
             //randomize the order of the instances in the dataset.
             insts2 = Randomize(random, insts2);
 
-            var trainSize2 = insts2.numInstances() * PercentSplit / 100;
+            var trainSize2 = insts2.numInstances() * SplitPercent / 100;
             var testSize2 = insts2.numInstances() - trainSize2;
             var train2 = new Instances(insts2, 0, trainSize2);
 
             _clKnn.buildClassifier(train2);
 
             _clKnn.toString();
-
-           
         }
+
         private double PerformCrossValidation(Classifier classifier, Instances instances)
         {
-            var crossValidator = new weka.classifiers.Evaluation(instances);
-            crossValidator.crossValidateModel(classifier, instances, 10, new Random(1));
+            var crossValidator = new Evaluation(instances);
+            crossValidator.crossValidateModel(classifier, instances, CrossValidation, new Random(1));
             return crossValidator.pctCorrect();
         }
 
 
-        private static void HandleNaiveBayes(Instances insts, List<double> successPercent, Filter random)
+        private static void HandleNaiveBayes(Instances insts, Filter random)
         {
             Filter nominalData = new Discretize();
             nominalData.setInputFormat(insts);
@@ -282,35 +261,20 @@ namespace DSS_LastAssignment
             //randomize the order of the instances in the dataset.
             insts = Randomize(random, insts);
 
-            var trainSize = insts.numInstances() * PercentSplit / 100;
+            var trainSize = insts.numInstances() * SplitPercent / 100;
             var testSize = insts.numInstances() - trainSize;
             var train = new Instances(insts, 0, trainSize);
 
             _clNaive.buildClassifier(train);
 
             _clNaive.toString();
-            
-        }
-        
-
-
-        private static int TestAlgorithm(int trainSize, Instances insts, int numCorrect, Classifier classifier)
-        {
-            for (var i = trainSize; i < insts.numInstances(); i++)
-            {
-                var currentInst = insts.instance(i);
-                var predictedClass = classifier.classifyInstance(currentInst);
-                if (predictedClass == insts.instance(i).classValue())
-                    numCorrect++;
-            }
-
-            return numCorrect;
         }
 
 
         private void button_Discover_Click(object sender, EventArgs e)
         {
-            var newDirectory = "test.arff"; // The new file to be created
+            var newDirectory = "test.arff"; // Define the path for the new ARFF file to be created
+
             // Clear the contents of the "test.arff" file
             File.WriteAllText(newDirectory, string.Empty);
 
@@ -326,7 +290,10 @@ namespace DSS_LastAssignment
 
                     while ((line = sr.ReadLine()) != null)
                     {
+                        // Write each line from the original file to the new ARFF file
                         sw.WriteLine(line);
+
+                        // Break the loop if "@data" or "@DATA" is encountered
                         if (line == comp || line == comp2)
                             break;
                     }
@@ -337,44 +304,35 @@ namespace DSS_LastAssignment
                 for (var i = 0; i < dataGridView1.Rows.Count - 1; i++)
                     sNewInstance += (string)dataGridView1.Rows[i].Cells[1].Value + ",";
                 sNewInstance += "?";
+
+                // Write the new instance to the new ARFF file
                 sw.WriteLine(sNewInstance);
             }
 
-
+            // Switch statement to handle different classifiers based on _classifierName
             switch (_classifierName)
             {
                 case "Naive Bayes":
-                {
                     HandleNaiveByesInput(newDirectory, _randomize);
                     break;
-                }
                 case "K Nearest Neighbor":
-                {
                     HandleKnnInput(newDirectory, _randomize, _nominalToBinary, _normalize);
                     break;
-                }
                 case "Decision Tree":
-                {
                     HandleDecisionTreeInput(newDirectory, _randomize, _normalize);
                     break;
-                }
                 case "Neural Network":
-                {
                     HandleNnInput(newDirectory, _randomize, _nominalToBinary, _normalize);
                     break;
-                }
                 case "Support Vector Machine":
-                {
                     HandleSvmInput(newDirectory, _randomize, _nominalToBinary, _normalize);
                     break;
-                }
                 default:
-                {
-                    label2.Text = @"Error!";
+                    label2.Text = @"Error: Invalid classifier name";
                     break;
-                }
             }
         }
+
 
         private void HandleSvmInput(string newDirectory, Filter random, Filter nominalToBinary, Filter normalize)
         {
@@ -403,7 +361,7 @@ namespace DSS_LastAssignment
         {
             var insts4 = new Instances(new FileReader(newDirectory));
             insts4.setClassIndex(insts4.numAttributes() - 1);
-            
+
             //Nominal to Binary
 
             insts4 = NominalToBinary(nominalToBinary, insts4);
@@ -491,7 +449,7 @@ namespace DSS_LastAssignment
             var predictedClass = _clNaive.classifyInstance(insts.instance(0));
             label2.Text = insts.classAttribute().value(Convert.ToInt32(predictedClass));
         }
-        
+
 
         private void MainForm_Load(object sender, EventArgs e)
         {
@@ -501,11 +459,10 @@ namespace DSS_LastAssignment
         {
         }
 
-       
 
         private void pictureBox1_Click_1(object sender, EventArgs e)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
     }
 }

@@ -1,10 +1,10 @@
-@relation weather
+@relation weather.symbolic
 
 @attribute outlook {sunny, overcast, rainy}
-@attribute temperature numeric
-@attribute humidity numeric
+@attribute temperature {hot, mild, cool}
+@attribute humidity {high, normal}
 @attribute windy {TRUE, FALSE}
 @attribute play {yes, no}
 
 @data
-overcast,70,80,TRUE,?
+sunny,hot,high,TRUE,?
