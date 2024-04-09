@@ -14,6 +14,7 @@ using weka.filters.unsupervised.attribute;
 using weka.filters.unsupervised.instance;
 using File = System.IO.File;
 using Normalize = weka.filters.unsupervised.instance.Normalize;
+using Random = java.util.Random;
 
 namespace DSS_LastAssignment
 {
@@ -79,6 +80,11 @@ namespace DSS_LastAssignment
             _clNaive = new NaiveBayes();
 
             HandleNaiveBayes(insts, successPercent, _randomize);
+            var naiveBayesSuccessRate = PerformCrossValidation(_clNaive, insts);
+            successPercent.Add(naiveBayesSuccessRate);
+
+
+            
 
             //kNN 
 
@@ -89,6 +95,8 @@ namespace DSS_LastAssignment
             _clKnn = new IBk();
 
             HandleKnn(insts2, successPercent, _randomize, _nominalToBinary, _normalize);
+            var knnSuccessRate = PerformCrossValidation(_clKnn, insts2);
+            successPercent.Add(knnSuccessRate);
 
             //Decision tree
             var insts3 = new Instances(new FileReader(_fileDirectory));
@@ -99,6 +107,10 @@ namespace DSS_LastAssignment
 
 
             HandleTree(insts3, successPercent, _randomize, _normalize);
+            var treeSuccessRate = PerformCrossValidation(_clTree, insts3);
+            successPercent.Add(treeSuccessRate);
+
+
 
             //Neural Network
             var insts4 = new Instances(new FileReader(_fileDirectory));
@@ -108,6 +120,9 @@ namespace DSS_LastAssignment
             _clNn = new MultilayerPerceptron();
 
             HandleNn(insts4, successPercent, _randomize, _nominalToBinary, _normalize);
+            var nnSuccessRate = PerformCrossValidation(_clNn, insts4);
+            successPercent.Add(nnSuccessRate);
+
 
             //SVM
             var insts5 = new Instances(new FileReader(_fileDirectory));
@@ -117,6 +132,9 @@ namespace DSS_LastAssignment
             _clSvm = new SMO();
 
             HandleSvm(insts5, successPercent, _randomize, _nominalToBinary, _normalize);
+            var svmSuccessRate = PerformCrossValidation(_clSvm, insts5);
+            successPercent.Add(svmSuccessRate);
+
 
 
             for (var i = 0; i < successPercent.Count; i++)
@@ -183,11 +201,7 @@ namespace DSS_LastAssignment
             _clSvm.buildClassifier(train5);
 
             _clSvm.toString();
-            // Test the classifier
-            var numCorrect5 = 0;
-            numCorrect5 = TestAlgorithm(trainSize5, insts5, numCorrect5, _clSvm);
-            var supportVectorMachine = numCorrect5 / (double)testSize5 * 100.0;
-            successPercent.Add(supportVectorMachine);
+           
         }
 
         private static void HandleNn(Instances insts4, List<double> successPercent, Filter random,
@@ -207,13 +221,7 @@ namespace DSS_LastAssignment
             var train4 = new Instances(insts4, 0, trainSize4);
 
             _clNn.buildClassifier(train4);
-
-
-            var numCorrect4 = 0;
-            numCorrect4 = TestAlgorithm(trainSize4, insts4, numCorrect4, _clNn);
-
-            var neuralNetwork = numCorrect4 / (double)testSize4 * 100.0;
-            successPercent.Add(neuralNetwork);
+            
         }
 
         private static void HandleTree(Instances insts3, List<double> successPercent, Filter random, Filter normalize)
@@ -231,10 +239,7 @@ namespace DSS_LastAssignment
 
             _clTree.toString();
 
-            var numCorrect3 = 0;
-            numCorrect3 = TestAlgorithm(trainSize3, insts3, numCorrect3, _clTree);
-            var decisionTree = numCorrect3 / (double)testSize3 * 100.0;
-            successPercent.Add(decisionTree);
+            
         }
 
         private static void HandleKnn(Instances insts2, List<double> successPercent, Filter random,
@@ -257,11 +262,15 @@ namespace DSS_LastAssignment
 
             _clKnn.toString();
 
-            var numCorrect2 = 0;
-            numCorrect2 = TestAlgorithm(trainSize2, insts2, numCorrect2, _clKnn);
-            var kNearestNeighbor = numCorrect2 / (double)testSize2 * 100.0;
-            successPercent.Add(kNearestNeighbor);
+           
         }
+        private double PerformCrossValidation(Classifier classifier, Instances instances)
+        {
+            var crossValidator = new weka.classifiers.Evaluation(instances);
+            crossValidator.crossValidateModel(classifier, instances, 10, new Random(1));
+            return crossValidator.pctCorrect();
+        }
+
 
         private static void HandleNaiveBayes(Instances insts, List<double> successPercent, Filter random)
         {
@@ -280,12 +289,10 @@ namespace DSS_LastAssignment
             _clNaive.buildClassifier(train);
 
             _clNaive.toString();
-
-            var numCorrect = 0;
-            numCorrect = TestAlgorithm(trainSize, insts, numCorrect, _clNaive);
-            var naiveBayes = numCorrect / (double)testSize * 100.0;
-            successPercent.Add(naiveBayes);
+            
         }
+        
+
 
         private static int TestAlgorithm(int trainSize, Instances insts, int numCorrect, Classifier classifier)
         {
@@ -494,15 +501,7 @@ namespace DSS_LastAssignment
         {
         }
 
-        private void groupBox4_Enter(object sender, EventArgs e)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-
-        }
+       
 
         private void pictureBox1_Click_1(object sender, EventArgs e)
         {

@@ -165,7 +165,7 @@ namespace DSS_LastAssignment
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(43, 17);
             this.label2.TabIndex = 16;
-            this.label2.Text = "result";
+            this.label2.Text = "....";
             // 
             // pictureBox1
             // 
@@ -182,7 +182,7 @@ namespace DSS_LastAssignment
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.Chocolate;
+            this.BackColor = System.Drawing.Color.MistyRose;
             this.ClientSize = new System.Drawing.Size(1077, 659);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.groupBox4);
