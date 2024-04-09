@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Windows.Forms;
 
-
 namespace DSS_LastAssignment
 {
-    static class Program
+    internal static class Program
     {
-        
         [STAThread]
-        static void Main()
+        private static void Main()
         {
             // Enable visual styles for the application
             Application.EnableVisualStyles();

@@ -7,4 +7,4 @@
 @attribute play {yes, no}
 
 @data
-overcast,mild,high,TRUE,?
+sunny,mild,normal,TRUE,?
