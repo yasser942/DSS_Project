@@ -21,8 +21,8 @@ namespace DSS_LastAssignment
     {
         public MainForm()
         {
-            _count = 0;
-            _max = -9999999;
+       
+            _rate = 0.0;
             InitializeComponent();
         }
 
@@ -32,8 +32,8 @@ namespace DSS_LastAssignment
         }
         OpenFileDialog _file = new OpenFileDialog();
         public String _fileDirectory = "";
-        double _max;
-        int _count;
+        double _rate;
+        string _classifierName = "";
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -50,20 +50,23 @@ namespace DSS_LastAssignment
         private static Classifier _clTree;
         private static Classifier _clNn;
         private static Classifier _clSvm;
+        //randomize the order of the instances in the dataset.
+        private readonly Filter _randomize = new Randomize();
+            
+        //Nominal to Binary
+        private readonly Filter _nominalToBinary = new NominalToBinary();
+        //Normalization
+        private readonly Filter _normalize = new Normalize();
 
-        public MainForm(double max)
-        {
-            _count = 0;
-            _max = max;
-        }
+        
 
         private const int PercentSplit = 66;
 
         private void result_Click(object sender, EventArgs e)
         {
-            string classifierName = "";
-            if (classifierName == null) throw new ArgumentNullException(nameof(classifierName));
-            List<string> algorithms = new List<string>
+            
+            if (_classifierName == null) throw new ArgumentNullException(nameof(_classifierName));
+            var algorithms = new List<string>
             {
                 "Naive Bayes",
                 "K Nearest Neighbor",
@@ -76,7 +79,73 @@ namespace DSS_LastAssignment
 
             //Naive Bayes
             Instances insts = new Instances(new FileReader(_fileDirectory));
+           //Render the view
+            RenderView(insts);
+            
+           
+            
+            _clNaive = new NaiveBayes();
+            
+            HandleNaiveBayes(insts, successPercent ,_randomize);
+            
+            //kNN 
 
+            Instances insts2 = new Instances(new FileReader(_fileDirectory));
+
+            insts2.setClassIndex(insts2.numAttributes() - 1);
+
+            _clKnn = new IBk();
+
+            HandleKnn(insts2, successPercent, _randomize, _nominalToBinary, _normalize);
+
+            //Decision tree
+            Instances insts3 = new Instances(new FileReader(_fileDirectory));
+
+            insts3.setClassIndex(insts3.numAttributes() - 1);
+
+            _clTree = new J48();
+
+
+
+            HandleTree(insts3, successPercent, _randomize, _normalize);
+
+            //Neural Network
+            Instances insts4 = new Instances(new FileReader(_fileDirectory));
+
+            insts4.setClassIndex(insts4.numAttributes() - 1);
+
+            _clNn = new MultilayerPerceptron();
+
+            HandleNn(insts4, successPercent, _randomize , _nominalToBinary , _normalize);
+
+            //SVM
+            Instances insts5 = new Instances(new FileReader(_fileDirectory));
+
+            insts5.setClassIndex(insts5.numAttributes() - 1);
+
+            _clSvm = new SMO();
+
+            HandleSvm(insts5, successPercent, _randomize , _nominalToBinary , _normalize);
+
+
+            for (int i = 0; i < successPercent.Count; i++)
+            {
+
+                if (successPercent[i] > _rate)
+                {
+                    _rate = successPercent[i];
+                    _classifierName = algorithms[i];
+                }
+
+            }
+
+            label1.Text = $@"{_classifierName} is the best algorithm with {_rate:F2}% success rate.";
+
+
+        }
+
+        private void RenderView(Instances insts)
+        {
             // Create a new DataGridView with 2 columns
             dataGridView1.ColumnCount = 2;
             dataGridView1.RowCount = insts.numAttributes();
@@ -88,10 +157,9 @@ namespace DSS_LastAssignment
             {
                 // Fill the first column with the attribute names
                 dataGridView1.Rows[y].Cells[0].Value = insts.attribute(y).name();
-                
+
                 if (insts.attribute(y).isNominal())
                 {
-                    
                     string phrase = insts.attribute(y).toString();
                     string[] first = phrase.Split('{');
 
@@ -105,97 +173,25 @@ namespace DSS_LastAssignment
                     {
                         comboColumn.Items.Add(a);
                     }
+
                     dataGridView1.Rows[y].Cells[1] = comboColumn;
                 }
             }
+
             // Fill the last row with the class attribute
             insts.setClassIndex(insts.numAttributes() - 1);
-            // Create a new instance of the NaiveBayes classifier
-            
-            //randomize the order of the instances in the dataset.
-            Filter randomize = new Randomize();
-            
-            //Nominal to Binary
-            Filter nominalToBinary = new NominalToBinary();
-            //Normalization
-            Filter normalize = new Normalize();
-            
-            _clNaive = new NaiveBayes();
-            
-            HandleNaiveBayes(insts, successPercent ,randomize);
-            //kNN 
-
-            Instances insts2 = new Instances(new FileReader(_fileDirectory));
-
-            insts2.setClassIndex(insts2.numAttributes() - 1);
-
-            _clKnn = new IBk();
-
-            HandleKnn(insts2, successPercent, randomize, nominalToBinary, normalize);
-
-            //Decision tree
-            Instances insts3 = new Instances(new FileReader(_fileDirectory));
-
-            insts3.setClassIndex(insts3.numAttributes() - 1);
-
-            _clTree = new J48();
-
-
-
-            HandleTree(insts3, successPercent, randomize, normalize);
-
-            //Neural Network
-            Instances insts4 = new Instances(new FileReader(_fileDirectory));
-
-            insts4.setClassIndex(insts4.numAttributes() - 1);
-
-            _clNn = new MultilayerPerceptron();
-
-            HandleNn(insts4, successPercent, randomize , nominalToBinary , normalize);
-
-            //SVM
-            Instances insts5 = new Instances(new FileReader(_fileDirectory));
-
-            insts5.setClassIndex(insts5.numAttributes() - 1);
-
-            _clSvm = new SMO();
-
-            HandleSvm(insts5, successPercent, randomize , nominalToBinary , normalize);
-
-
-            for (int i = 0; i < successPercent.Count; i++)
-            {
-
-                if (successPercent[i] > _max)
-                {
-                    _max = successPercent[i];
-                    _count = i + 1;
-                }
-
-            }
-            for (int i = 0; i < _count; i++)
-            {
-                classifierName = algorithms[i];
-            }
-
-            label1.Text = $@"{classifierName} is the best algorithm with {_max:F2}% success rate.";
-
-
         }
 
         private static void HandleSvm(Instances insts5, List<double> successPercent, Filter random , Filter nominalToBinary , Filter normalize)
         {
+            //Nominal to Binary
+            insts5 = NominalToBinary(nominalToBinary, insts5);
             
-            nominalToBinary.setInputFormat(insts5);
-            insts5 = Filter.useFilter(insts5, nominalToBinary);
-
-           
-            normalize.setInputFormat(insts5);
-            insts5 = Filter.useFilter(insts5, normalize);
-
+            //Normalization
+            insts5 = Normalize(normalize, insts5);
             
-            random.setInputFormat(insts5);
-            insts5 = Filter.useFilter(insts5, random);
+            //randomize the order of the instances in the dataset.
+            insts5 = Randomize(random, insts5);
 
             int trainSize5 = insts5.numInstances() * PercentSplit / 100;
             int testSize5 = insts5.numInstances() - trainSize5;
@@ -206,7 +202,7 @@ namespace DSS_LastAssignment
             _clSvm.toString();
             // Test the classifier
             var numCorrect5 = 0;
-            numCorrect5 = TestAlgoritm(trainSize5, insts5, numCorrect5, _clSvm);
+            numCorrect5 = TestAlgorithm(trainSize5, insts5, numCorrect5, _clSvm);
             var supportVectorMachine = numCorrect5 / (double)testSize5 * 100.0;
             successPercent.Add(supportVectorMachine);
         }
@@ -214,16 +210,13 @@ namespace DSS_LastAssignment
         private static void HandleNn(Instances insts4, List<double> successPercent , Filter random , Filter nominalToBinary , Filter normalize)
         {
             //Nominal to Binary
-            nominalToBinary.setInputFormat(insts4);
-            insts4 = Filter.useFilter(insts4, nominalToBinary);
+            insts4 = NominalToBinary(nominalToBinary, insts4);
 
             //Normalization
-            normalize.setInputFormat(insts4);
-            insts4 = Filter.useFilter(insts4, normalize);
+            insts4 = Normalize(normalize, insts4);
 
-           
-            random.setInputFormat(insts4);
-            insts4 = Filter.useFilter(insts4, random);
+           //randomize the order of the instances in the dataset.   
+            insts4 = Randomize(random, insts4);
 
             int trainSize4 = insts4.numInstances() * PercentSplit / 100;
             int testSize4 = insts4.numInstances() - trainSize4;
@@ -233,7 +226,7 @@ namespace DSS_LastAssignment
 
 
             var numCorrect4 = 0;
-            numCorrect4 = TestAlgoritm(trainSize4, insts4, numCorrect4, _clNn);
+            numCorrect4 = TestAlgorithm(trainSize4, insts4, numCorrect4, _clNn);
 
             var neuralNetwork = numCorrect4 / (double)testSize4 * 100.0;
             successPercent.Add(neuralNetwork);
@@ -241,14 +234,10 @@ namespace DSS_LastAssignment
 
         private static void HandleTree(Instances insts3, List<double> successPercent , Filter random,Filter normalize)
         {
-           
-            normalize.setInputFormat(insts3);
-            insts3 = Filter.useFilter(insts3, normalize);
-
-
-           
-            random.setInputFormat(insts3);
-            insts3 = Filter.useFilter(insts3, random);
+           //Normalization
+            insts3= Normalize(normalize, insts3);
+           //randomize the order of the instances in the dataset.
+            insts3 = Randomize(random, insts3);
 
             int trainSize3 = insts3.numInstances() * PercentSplit / 100;
             int testSize3 = insts3.numInstances() - trainSize3;
@@ -259,7 +248,7 @@ namespace DSS_LastAssignment
             _clTree.toString();
 
             var numCorrect3 = 0;
-            numCorrect3 = TestAlgoritm(trainSize3, insts3, numCorrect3, _clTree);
+            numCorrect3 = TestAlgorithm(trainSize3, insts3, numCorrect3, _clTree);
             var decisionTree = numCorrect3 / (double)testSize3 * 100.0;
             successPercent.Add(decisionTree);
         }
@@ -268,16 +257,12 @@ namespace DSS_LastAssignment
         {
             //Nominal to Binary
            
-            nominalToBinary.setInputFormat(insts2);
-            insts2 = Filter.useFilter(insts2, nominalToBinary);
+            insts2 = NominalToBinary(nominalToBinary, insts2);
 
             //Normalization
-        
-            normalize.setInputFormat(insts2);
-            insts2 = Filter.useFilter(insts2, normalize);
-            
-            random.setInputFormat(insts2);
-            insts2 = Filter.useFilter(insts2, random);
+            insts2 = Normalize(normalize, insts2);
+            //randomize the order of the instances in the dataset.
+            insts2= Randomize(random, insts2);
 
             int trainSize2 = insts2.numInstances() * PercentSplit / 100;
             int testSize2 = insts2.numInstances() - trainSize2;
@@ -288,7 +273,7 @@ namespace DSS_LastAssignment
             _clKnn.toString();
 
             var numCorrect2 = 0;
-            numCorrect2 = TestAlgoritm(trainSize2, insts2, numCorrect2, _clKnn);
+            numCorrect2 = TestAlgorithm(trainSize2, insts2, numCorrect2, _clKnn);
             var kNearestNeighbor = numCorrect2 / (double)testSize2 * 100.0;
             successPercent.Add(kNearestNeighbor);
         }
@@ -301,8 +286,8 @@ namespace DSS_LastAssignment
 
 
             
-            random.setInputFormat(insts);
-            insts = Filter.useFilter(insts, random);
+            //randomize the order of the instances in the dataset.
+            insts = Randomize(random, insts);
 
             int trainSize = insts.numInstances() * PercentSplit / 100;
             int testSize = insts.numInstances() - trainSize;
@@ -313,12 +298,12 @@ namespace DSS_LastAssignment
             _clNaive.toString();
 
             var numCorrect = 0;
-            numCorrect = TestAlgoritm(trainSize, insts, numCorrect, _clNaive);
+            numCorrect = TestAlgorithm(trainSize, insts, numCorrect, _clNaive);
             var naiveBayes = numCorrect / (double)testSize * 100.0;
             successPercent.Add(naiveBayes);
         }
 
-        private static int TestAlgoritm (int trainSize, Instances insts, int numCorrect , Classifier classifier)
+        private static int TestAlgorithm (int trainSize, Instances insts, int numCorrect , Classifier classifier)
         {
             for (int i = trainSize; i < insts.numInstances(); i++)
             {
@@ -368,120 +353,158 @@ namespace DSS_LastAssignment
             }
 
 
-            if (_count == 1)
+            switch (_classifierName)
             {
-                Instances insts = new Instances(new FileReader(newDirectory));
-                insts.setClassIndex(insts.numAttributes() - 1);
-
-                Filter nominalData = new Discretize();
-                nominalData.setInputFormat(insts);
-                insts = Filter.useFilter(insts, nominalData);
-
-                //randomize the order of the instances in the dataset.
-                Filter myRandom = new Randomize();
-                myRandom.setInputFormat(insts);
-                insts = Filter.useFilter(insts, myRandom);
-
-                double predictedClass = _clNaive.classifyInstance(insts.instance(0));
-                label2.Text = insts.classAttribute().value(Convert.ToInt32(predictedClass));
-            }
-            else if (_count == 2)
-            {
-                Instances insts2 = new Instances(new FileReader(_fileDirectory));
-
-                insts2.setClassIndex(insts2.numAttributes() - 1);
-
-                //Nominal to Binary
-                Filter myBinaryData = new NominalToBinary();
-                myBinaryData.setInputFormat(insts2);
-                insts2 = Filter.useFilter(insts2, myBinaryData);
-
-                //Normalization
-                Filter myNormalized = new Normalize();
-                myNormalized.setInputFormat(insts2);
-                insts2 = Filter.useFilter(insts2, myNormalized);
-
-                //randomize the order of the instances in the dataset.
-                Filter myRandom2 = new Randomize();
-                myRandom2.setInputFormat(insts2);
-                insts2 = Filter.useFilter(insts2, myRandom2);
-
-                double predictedClass2 = _clKnn.classifyInstance(insts2.instance(0));
-                label2.Text = insts2.classAttribute().value(Convert.ToInt32(predictedClass2));
-            }
-            else if (_count == 3)
-            {
-                Instances insts3 = new Instances(new FileReader(newDirectory));
-
-                insts3.setClassIndex(insts3.numAttributes() - 1);
-                Filter myNormalized2 = new Normalize();
-                myNormalized2.setInputFormat(insts3);
-                insts3 = Filter.useFilter(insts3, myNormalized2);
-
-
-                //randomize the order of the instances in the dataset.
-                Filter myRandom3 = new Randomize();
-                myRandom3.setInputFormat(insts3);
-                insts3 = Filter.useFilter(insts3, myRandom3);
-
-                double predictedClass3 = _clTree.classifyInstance(insts3.instance(0));
-                label2.Text = insts3.classAttribute().value(Convert.ToInt32(predictedClass3));
-            }
-            else if (_count == 4)
-            {
-                Instances insts4 = new Instances(new FileReader(newDirectory));
-                insts4.setClassIndex(insts4.numAttributes() - 1);
-
-                //cl = new weka.classifiers.functions.MultilayerPerceptron();
-                //Nominal to Binary
-                Filter myBinaryData2 = new NominalToBinary();
-                myBinaryData2.setInputFormat(insts4);
-                insts4 = Filter.useFilter(insts4, myBinaryData2);
-
-                //Normalization
-                Filter myNormalized3 = new Normalize();
-                myNormalized3.setInputFormat(insts4);
-                insts4 = Filter.useFilter(insts4, myNormalized3);
-
-                //randomize the order of the instances in the dataset.
-                Filter myRandom4 = new Randomize();
-                myRandom4.setInputFormat(insts4);
-                insts4 = Filter.useFilter(insts4, myRandom4);
-
-                double predictedClass4 = _clNn.classifyInstance(insts4.instance(0));
-                label2.Text = insts4.classAttribute().value(Convert.ToInt32(predictedClass4));
-            }
-            else if (_count == 5)
-            {
-                Instances insts5 = new Instances(new FileReader(newDirectory));
-
-                insts5.setClassIndex(insts5.numAttributes() - 1);
-
-
-                //Nominal to Binary
-                Filter myBinaryData3 = new NominalToBinary();
-                myBinaryData3.setInputFormat(insts5);
-                insts5 = Filter.useFilter(insts5, myBinaryData3);
-
-                //Normalization
-                Filter myNormalized4 = new Normalize();
-                myNormalized4.setInputFormat(insts5);
-                insts5 = Filter.useFilter(insts5, myNormalized4);
-
-                //randomize the order of the instances in the dataset.
-                Filter myRandom5 = new Randomize();
-                myRandom5.setInputFormat(insts5);
-                insts5 = Filter.useFilter(insts5, myRandom5);
-
-                double predictedClass5 = _clSvm.classifyInstance(insts5.instance(0));
-                label2.Text = insts5.classAttribute().value(Convert.ToInt32(predictedClass5));
-            }
-            else
-            {
-                label2.Text = "Error!";
+                case "Naive Bayes":
+                {
+                    HandleNaiveByesInput(newDirectory, _randomize);
+                    break;
+                }
+                case "K Nearest Neighbor":
+                {
+                    HandleKnnInput(newDirectory, _randomize, _nominalToBinary, _normalize);
+                    break;
+                }
+                case "Decision Tree":
+                {
+                    HandleDecisionTreeInput(newDirectory ,_randomize, _normalize);
+                    break;
+                }
+                case "Neural Network":
+                {
+                    HandleNnInput(newDirectory, _randomize, _nominalToBinary, _normalize);
+                    break;
+                }
+                case "Support Vector Machine":
+                {
+                    HandleSvmInput(newDirectory, _randomize, _nominalToBinary, _normalize);
+                    break;
+                }
+                default:
+                {
+                    label2.Text = @"Error!";
+                    break;
+                }
             }
         }
-        
+
+        private void HandleSvmInput(string newDirectory, Filter random, Filter nominalToBinary, Filter normalize)
+        {
+            Instances insts5 = new Instances(new FileReader(newDirectory));
+
+            insts5.setClassIndex(insts5.numAttributes() - 1);
+
+
+            //Nominal to Binary
+            
+            insts5 = NominalToBinary(nominalToBinary, insts5);
+
+            //Normalization
+            
+            insts5 = Normalize(normalize, insts5); 
+
+            //randomize the order of the instances in the dataset.
+            
+            insts5 = Randomize(random, insts5);
+
+            double predictedClass5 = _clSvm.classifyInstance(insts5.instance(0));
+            label2.Text = insts5.classAttribute().value(Convert.ToInt32(predictedClass5));
+        }
+
+        private void HandleNnInput(string newDirectory, Filter random, Filter nominalToBinary, Filter normalize)
+        {
+            Instances insts4 = new Instances(new FileReader(newDirectory));
+            insts4.setClassIndex(insts4.numAttributes() - 1);
+
+            
+            //Nominal to Binary
+            
+            insts4 = NominalToBinary(nominalToBinary, insts4);
+
+            //Normalization
+            insts4 = Normalize(normalize, insts4);
+
+            //randomization
+            insts4 = Randomize(random, insts4);
+
+            double predictedClass4 = _clNn.classifyInstance(insts4.instance(0));
+            label2.Text = insts4.classAttribute().value(Convert.ToInt32(predictedClass4));
+        }
+
+        private void HandleDecisionTreeInput(string newDirectory , Filter random , Filter normalize)
+        {
+            Instances insts3 = new Instances(new FileReader(newDirectory));
+
+            insts3.setClassIndex(insts3.numAttributes() - 1);
+            //Normalization
+            insts3= Normalize(normalize, insts3);
+
+            //randomize the order of the instances in the dataset.
+         
+            insts3 = Randomize(random, insts3);
+
+            double predictedClass3 = _clTree.classifyInstance(insts3.instance(0));
+            label2.Text = insts3.classAttribute().value(Convert.ToInt32(predictedClass3));
+        }
+
+        private void HandleKnnInput( string newDirectory, Filter random, Filter nominalToBinary, Filter normalize)
+        {
+            Instances insts2 = new Instances(new FileReader(newDirectory));
+     
+            insts2.setClassIndex(insts2.numAttributes() - 1);
+            //Nominal to Binary
+            insts2 = NominalToBinary(nominalToBinary, insts2);
+            //Normalization
+            insts2 = Normalize(normalize, insts2);
+            //randomize the order of the instances in the dataset.
+            insts2 = Randomize(random, insts2);
+
+            double predictedClass2 = _clKnn.classifyInstance(insts2.instance(0));
+            label2.Text = insts2.classAttribute().value(Convert.ToInt32(predictedClass2));
+        }
+
+        private static Instances Randomize(Filter random, Instances insts)
+        {
+            //randomize the order of the instances in the dataset.
+
+            random.setInputFormat(insts);
+            insts = Filter.useFilter(insts, random);
+            return insts;
+        }
+
+        private static Instances Normalize(Filter normalize, Instances insts)
+        {
+            //Normalization
+
+            normalize.setInputFormat(insts);
+            insts = Filter.useFilter(insts, normalize);
+            return insts;
+        }
+
+        private static Instances NominalToBinary(Filter nominalToBinary, Instances insts)
+        {
+            //Nominal to Binary
+            nominalToBinary.setInputFormat(insts);
+            insts = Filter.useFilter(insts, nominalToBinary);
+            return insts;
+        }
+
+        private void HandleNaiveByesInput(string newDirectory,Filter random)
+        {
+            Instances insts = new Instances(new FileReader(newDirectory));
+            insts.setClassIndex(insts.numAttributes() - 1);
+
+            Filter nominalData = new Discretize();
+            nominalData.setInputFormat(insts);
+            insts = Filter.useFilter(insts, nominalData);
+
+            //randomize the order of the instances in the dataset.
+            insts = Randomize(random, insts);
+
+            double predictedClass = _clNaive.classifyInstance(insts.instance(0));
+            label2.Text = insts.classAttribute().value(Convert.ToInt32(predictedClass));
+        }
+
         private void richTextBox1_TextChanged(object sender, EventArgs e)
         {
 
