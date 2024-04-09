@@ -1,8 +1,8 @@
 ﻿// Namespace declaration
 namespace DSS_LastAssignment
 {
-    // Partial class declaration for Form1
-    partial class Form1
+    // Partial class declaration for MainForm
+    partial class MainForm
     {
         // Components for managing resources
         private System.ComponentModel.IContainer components = null;
@@ -18,6 +18,10 @@ namespace DSS_LastAssignment
         }
 
         // Method for initializing components
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
         private void InitializeComponent()
         {
             this.button_Browse = new System.Windows.Forms.Button();
@@ -111,7 +115,7 @@ namespace DSS_LastAssignment
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(9, 56);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(0, 16);
+            this.label1.Size = new System.Drawing.Size(0, 17);
             this.label1.TabIndex = 16;
             // 
             // groupBox3
@@ -121,7 +125,7 @@ namespace DSS_LastAssignment
             this.groupBox3.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox3.Size = new System.Drawing.Size(525, 712);
+            this.groupBox3.Size = new System.Drawing.Size(362, 449);
             this.groupBox3.TabIndex = 16;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Fill the new instance fields ";
@@ -135,7 +139,7 @@ namespace DSS_LastAssignment
             this.dataGridView1.Margin = new System.Windows.Forms.Padding(4);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersWidth = 51;
-            this.dataGridView1.Size = new System.Drawing.Size(502, 675);
+            this.dataGridView1.Size = new System.Drawing.Size(339, 390);
             this.dataGridView1.TabIndex = 0;
             // 
             // groupBox4
@@ -156,23 +160,24 @@ namespace DSS_LastAssignment
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(293, 71);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(39, 16);
+            this.label2.Size = new System.Drawing.Size(43, 17);
             this.label2.TabIndex = 16;
             this.label2.Text = "result";
             // 
-            // Form1
+            // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1291, 752);
+            this.BackColor = System.Drawing.Color.Chocolate;
+            this.ClientSize = new System.Drawing.Size(1077, 498);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Margin = new System.Windows.Forms.Padding(4);
-            this.Name = "Form1";
+            this.Name = "MainForm";
             this.Text = "ML Classifier";
-            this.Load += new System.EventHandler(this.Form1_Load);
+            this.Load += new System.EventHandler(this.MainForm_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
@@ -182,7 +187,6 @@ namespace DSS_LastAssignment
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
             this.ResumeLayout(false);
-
         }
 
         // Controls declaration

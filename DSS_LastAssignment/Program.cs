@@ -1,23 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using weka.core.converters;
+
 
 namespace DSS_LastAssignment
 {
     static class Program
     {
-        /// <summary>
-        /// Uygulamanın ana girdi noktası.
-        /// </summary>
+        
         [STAThread]
         static void Main()
         {
+            // Enable visual styles for the application
             Application.EnableVisualStyles();
+            // Set the compatibility of text rendering to false
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            // Run the application with the main form
+            Application.Run(new MainForm());
         }
     }
 }
